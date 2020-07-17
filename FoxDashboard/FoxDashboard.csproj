@@ -70,6 +70,8 @@
     <Compile Include="FrontEnd\Common\EnumBindingSourceExtension.cs" />
     <Compile Include="FrontEnd\Common\Enums.cs" />
     <Compile Include="FrontEnd\Common\RelayCommand.cs" />
+    <Compile Include="FrontEnd\Common\Strings.cs" />
+    <Compile Include="FrontEnd\Common\WebBrowserHelper.cs" />
     <Compile Include="FrontEnd\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="FrontEnd\Models\AppAttributes.cs" />
     <Compile Include="FrontEnd\Models\DataStore.cs" />

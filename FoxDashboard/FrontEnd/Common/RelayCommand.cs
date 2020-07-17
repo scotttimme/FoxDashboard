@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace TabletMock.FrontEnd.Common
+namespace FoxDashboard.FrontEnd.Common
 {
     class RelayCommand : ICommand
     {
