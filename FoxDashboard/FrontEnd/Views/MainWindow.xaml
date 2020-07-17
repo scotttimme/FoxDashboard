@@ -20,7 +20,12 @@
 	</Window.DataContext>
 	
 	<Window.Resources>
-		<conv:BooleanToVisibilityConverter x:Key="BoolConverter" />
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="..\Styles\AppButtonStyle.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+			<conv:BooleanToVisibilityConverter x:Key="BoolConverter" />
+		</ResourceDictionary>
 	</Window.Resources>
 
 	<Grid>
@@ -97,13 +102,8 @@
 			Grid.Row="1" 
 			Grid.Column="0"
 			Uid="1"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Background="Transparent"
-			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[0].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
-			Command="{Binding AppButtonCommand}"
-			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			Style="{StaticResource AppButton}"
+			Visibility="{Binding Path=ApplicationAttributes[0].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
 			<Button.Content>
 				<Image 
 					Source="../Images/1.jpg">
@@ -115,13 +115,8 @@
 			Grid.Row="1" 
 			Grid.Column="1"
 			Uid="2"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Background="Transparent"
-			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[1].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
-			Command="{Binding AppButtonCommand}"
-			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			Style="{StaticResource AppButton}"
+			Visibility="{Binding Path=ApplicationAttributes[1].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
 			<Button.Content>
 				<Image
 				Source="../Images/2.jpg">
@@ -133,13 +128,8 @@
 			Grid.Row="1" 
 			Grid.Column="2"
 			Uid="3"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Background="Transparent"
-			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[2].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
-			Command="{Binding AppButtonCommand}"
-			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			Style="{StaticResource AppButton}"
+			Visibility="{Binding Path=ApplicationAttributes[2].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
 			<Button.Content>
 				<Image
 				Source="../Images/3.jpg">
@@ -150,14 +140,9 @@
 		<Button
 			Grid.Row="2" 
 			Grid.Column="0"
-			Uid="1"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Background="Transparent"
-			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[3].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
-			Command="{Binding AppButtonCommand}"
-			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			Uid="4"
+			Style="{StaticResource AppButton}"
+			Visibility="{Binding Path=ApplicationAttributes[3].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
 			<Button.Content>
 				<Image 
 					Source="../Images/4.jpg">
@@ -168,14 +153,9 @@
 		<Button
 			Grid.Row="2" 
 			Grid.Column="1"
-			Uid="2"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Background="Transparent"
-			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[4].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
-			Command="{Binding AppButtonCommand}"
-			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			Uid="5"
+			Style="{StaticResource AppButton}"
+			Visibility="{Binding Path=ApplicationAttributes[4].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
 			<Button.Content>
 				<Image
 				Source="../Images/5.jpg">
@@ -186,14 +166,9 @@
 		<Button
 			Grid.Row="2" 
 			Grid.Column="2"
-			Uid="3"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Background="Transparent"
-			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[5].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
-			Command="{Binding AppButtonCommand}"
-			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			Uid="6"
+			Style="{StaticResource AppButton}"
+			Visibility="{Binding Path=ApplicationAttributes[5].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
 			<Button.Content>
 				<Image
 				Source="../Images/6.jpg">
@@ -204,14 +179,9 @@
 		<Button
 			Grid.Row="3" 
 			Grid.Column="0"
-			Uid="1"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Background="Transparent"
-			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[6].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
-			Command="{Binding AppButtonCommand}"
-			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			Uid="7"
+			Style="{StaticResource AppButton}"
+			Visibility="{Binding Path=ApplicationAttributes[6].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
 			<Button.Content>
 				<Image 
 					Source="../Images/7.jpg">
@@ -222,14 +192,9 @@
 		<Button
 			Grid.Row="3" 
 			Grid.Column="1"
-			Uid="2"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Background="Transparent"
-			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[7].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
-			Command="{Binding AppButtonCommand}"
-			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			Uid="8"
+			Style="{StaticResource AppButton}"
+			Visibility="{Binding Path=ApplicationAttributes[7].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
 			<Button.Content>
 				<Image
 				Source="../Images/8.jpg">
@@ -240,14 +205,9 @@
 		<Button
 			Grid.Row="3" 
 			Grid.Column="2"
-			Uid="3"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Background="Transparent"
-			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[8].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
-			Command="{Binding AppButtonCommand}"
-			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			Uid="9"
+			Style="{StaticResource AppButton}"
+			Visibility="{Binding Path=ApplicationAttributes[8].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
 			<Button.Content>
 				<Image
 				Source="../Images/9.jpg">
