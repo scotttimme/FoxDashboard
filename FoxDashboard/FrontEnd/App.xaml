@@ -1,0 +1,11 @@
+﻿<Application x:Class="TabletMock.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TabletMock"
+             StartupUri="FrontEnd/Views/MainWindow.xaml">
+
+	<Application.Resources>
+		
+	</Application.Resources>
+
+</Application>

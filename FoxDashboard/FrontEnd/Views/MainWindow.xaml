@@ -1,0 +1,258 @@
+﻿<Window x:Class="TabletMock.FrontEnd.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:TabletMock.FrontEnd.Views"
+		xmlns:VM="clr-namespace:TabletMock.FrontEnd.ViewModels"
+		xmlns:conv="clr-namespace:TabletMock.FrontEnd.Converters"
+		xmlns:cmn="clr-namespace:TabletMock.FrontEnd.Common"
+        mc:Ignorable="d"
+        Title="MainWindow"
+		WindowStyle="None"
+		Background="Black"
+		Height="350"
+		Width="250"
+		ResizeMode="NoResize">
+
+	<Window.DataContext>
+		<VM:MainWindowViewModel/>
+	</Window.DataContext>
+	
+	<Window.Resources>
+		<conv:BooleanToVisibilityConverter x:Key="BoolConverter" />
+	</Window.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height ="2*"/>
+			<RowDefinition Height ="2*"/>
+			<RowDefinition Height ="2*"/>
+			<RowDefinition Height ="2*"/>
+			<RowDefinition Height ="2*"/>
+			<RowDefinition Height ="1*"/>
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+		
+		<!-- Static Buttons -->
+
+		<TextBlock
+			Grid.Row="0" 
+			Grid.ColumnSpan="3"
+			Text="Welcome! Select an App."
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			FontSize="20"
+			Foreground="Yellow">
+		</TextBlock>
+
+		<TextBlock
+			Grid.Row="4" 
+			Grid.Column="0"
+			Text="&lt;&lt;"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			FontSize="20"
+			Foreground="Gray">
+		</TextBlock>
+
+		<TextBlock
+			Grid.Row="4" 
+			Grid.Column="2"
+			Text="&gt;&gt;"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			FontSize="20"
+			Foreground="Gray">
+		</TextBlock>
+
+		<Button
+			Grid.Row="5" 
+			Grid.ColumnSpan="3"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Background="Transparent"
+			BorderThickness="0"
+			Command="{Binding HomeButtonCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<Button.Content>
+				<TextBlock
+					Text="HOME"
+					FontSize="12"
+					Foreground="Yellow"
+					TextDecorations="underline">
+				</TextBlock>
+			</Button.Content>
+		</Button>
+
+
+		<!-- Dynamic Buttons -->
+
+		<Button
+			Grid.Row="1" 
+			Grid.Column="0"
+			Uid="1"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Background="Transparent"
+			BorderThickness="0"
+			Visibility="{Binding Path=ApplicationAttributes[0].AppVisibility}"
+			Command="{Binding AppButtonCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<Button.Content>
+				<Image 
+					Source="../Images/1.jpg">
+				</Image>
+			</Button.Content>
+		</Button>
+
+		<Button
+			Grid.Row="1" 
+			Grid.Column="1"
+			Uid="2"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Background="Transparent"
+			BorderThickness="0"
+			Visibility="{Binding Path=ApplicationAttributes[1].AppVisibility}"
+			Command="{Binding AppButtonCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<Button.Content>
+				<Image
+				Source="../Images/2.jpg">
+				</Image>
+			</Button.Content>
+		</Button>
+
+		<Button
+			Grid.Row="1" 
+			Grid.Column="2"
+			Uid="3"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Background="Transparent"
+			BorderThickness="0"
+			Visibility="{Binding Path=ApplicationAttributes[2].AppVisibility, UpdateSourceTrigger=PropertyChanged}"
+			Command="{Binding AppButtonCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<Button.Content>
+				<Image
+				Source="../Images/3.jpg">
+				</Image>
+			</Button.Content>
+		</Button>
+
+		<Button
+			Grid.Row="2" 
+			Grid.Column="0"
+			Uid="1"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Background="Transparent"
+			BorderThickness="0"
+			Visibility="{Binding Path=ApplicationAttributes[3].AppVisibility}"
+			Command="{Binding AppButtonCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<Button.Content>
+				<Image 
+					Source="../Images/4.jpg">
+				</Image>
+			</Button.Content>
+		</Button>
+
+		<Button
+			Grid.Row="2" 
+			Grid.Column="1"
+			Uid="2"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Background="Transparent"
+			BorderThickness="0"
+			Visibility="{Binding Path=ApplicationAttributes[4].AppVisibility}"
+			Command="{Binding AppButtonCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<Button.Content>
+				<Image
+				Source="../Images/5.jpg">
+				</Image>
+			</Button.Content>
+		</Button>
+
+		<Button
+			Grid.Row="2" 
+			Grid.Column="2"
+			Uid="3"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Background="Transparent"
+			BorderThickness="0"
+			Visibility="{Binding Path=ApplicationAttributes[5].AppVisibility, UpdateSourceTrigger=PropertyChanged}"
+			Command="{Binding AppButtonCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<Button.Content>
+				<Image
+				Source="../Images/6.jpg">
+				</Image>
+			</Button.Content>
+		</Button>
+
+		<Button
+			Grid.Row="3" 
+			Grid.Column="0"
+			Uid="1"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Background="Transparent"
+			BorderThickness="0"
+			Visibility="{Binding Path=ApplicationAttributes[6].AppVisibility}"
+			Command="{Binding AppButtonCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<Button.Content>
+				<Image 
+					Source="../Images/7.jpg">
+				</Image>
+			</Button.Content>
+		</Button>
+
+		<Button
+			Grid.Row="3" 
+			Grid.Column="1"
+			Uid="2"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Background="Transparent"
+			BorderThickness="0"
+			Visibility="{Binding Path=ApplicationAttributes[7].AppVisibility}"
+			Command="{Binding AppButtonCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<Button.Content>
+				<Image
+				Source="../Images/8.jpg">
+				</Image>
+			</Button.Content>
+		</Button>
+
+		<Button
+			Grid.Row="3" 
+			Grid.Column="2"
+			Uid="3"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Background="Transparent"
+			BorderThickness="0"
+			Visibility="{Binding Path=ApplicationAttributes[8].AppVisibility, UpdateSourceTrigger=PropertyChanged}"
+			Command="{Binding AppButtonCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<Button.Content>
+				<Image
+				Source="../Images/9.jpg">
+				</Image>
+			</Button.Content>
+		</Button>
+	</Grid>
+</Window>

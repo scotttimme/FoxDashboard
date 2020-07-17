@@ -1,0 +1,1 @@
+This file is created so Git will actually Track the Apps Directory. Additionally the project's .gitignore will ignore anything in this folder so developers can have the freedom to play with the Apps without accidentally configuring their sandbox.
