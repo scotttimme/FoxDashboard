@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace TabletMock.FrontEnd.Converters
+namespace FoxDashboard.FrontEnd.Converters
 {
     public sealed class BooleanToVisibilityConverter : IValueConverter
     {

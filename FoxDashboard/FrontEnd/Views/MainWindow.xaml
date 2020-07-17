@@ -1,18 +1,18 @@
-﻿<Window x:Class="TabletMock.FrontEnd.Views.MainWindow"
+﻿<Window x:Class="FoxDashboard.FrontEnd.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:TabletMock.FrontEnd.Views"
-		xmlns:VM="clr-namespace:TabletMock.FrontEnd.ViewModels"
-		xmlns:conv="clr-namespace:TabletMock.FrontEnd.Converters"
-		xmlns:cmn="clr-namespace:TabletMock.FrontEnd.Common"
+		xmlns:local="clr-namespace:FoxDashboard.FrontEnd.Views"
+		xmlns:VM="clr-namespace:FoxDashboard.FrontEnd.ViewModels"
+		xmlns:conv="clr-namespace:FoxDashboard.FrontEnd.Converters"
+		xmlns:cmn="clr-namespace:FoxDashboard.FrontEnd.Common"
         mc:Ignorable="d"
         Title="MainWindow"
 		WindowStyle="None"
 		Background="Black"
-		Height="350"
-		Width="250"
+		Height="750"
+		Width="550"
 		ResizeMode="NoResize">
 
 	<Window.DataContext>
@@ -22,7 +22,7 @@
 	<Window.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="..\Styles\AppButtonStyle.xaml"/>
+				<ResourceDictionary Source="..\Styles\ButtonStyle.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<conv:BooleanToVisibilityConverter x:Key="BoolConverter" />
 		</ResourceDictionary>
@@ -31,9 +31,7 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height ="2*"/>
-			<RowDefinition Height ="2*"/>
-			<RowDefinition Height ="2*"/>
-			<RowDefinition Height ="2*"/>
+			<RowDefinition Height ="6*"/>
 			<RowDefinition Height ="2*"/>
 			<RowDefinition Height ="1*"/>
 		</Grid.RowDefinitions>
@@ -45,44 +43,68 @@
 		</Grid.ColumnDefinitions>
 		
 		<!-- Static Buttons -->
-
 		<TextBlock
+			Name="DashboardTitle"
 			Grid.Row="0" 
 			Grid.ColumnSpan="3"
-			Text="Welcome! Select an App."
+			Text="{Binding PageAttributes.PageTitle}"
 			HorizontalAlignment="Center"
 			VerticalAlignment="Center"
 			FontSize="20"
 			Foreground="Yellow">
 		</TextBlock>
 
-		<TextBlock
-			Grid.Row="4" 
+		<Button
+			Name="PageDec"
+			Style="{StaticResource GenericButton}"
+			Grid.Row="2" 
 			Grid.Column="0"
-			Text="&lt;&lt;"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			FontSize="20"
-			Foreground="Gray">
-		</TextBlock>
-
-		<TextBlock
-			Grid.Row="4" 
-			Grid.Column="2"
-			Text="&gt;&gt;"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			FontSize="20"
-			Foreground="Gray">
-		</TextBlock>
+			Command="{Binding PageDecCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<TextBlock
+				Text="&lt;&lt;"
+				FontSize="20">
+				<TextBlock.Style>
+					<Style TargetType="TextBlock">
+						<Setter Property="Foreground" Value="Gray"/>
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding Path=PageAttributes.PageDecrementable}" Value="True">
+								<Setter Property="Foreground" Value="Yellow"/>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</TextBlock.Style>
+			</TextBlock>
+		</Button>
 
 		<Button
-			Grid.Row="5" 
+			Name="PageInc"
+			Style="{StaticResource GenericButton}"
+			Grid.Row="2" 
+			Grid.Column="2"
+			Command="{Binding PageIncCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<TextBlock
+				Text="&gt;&gt;"
+				FontSize="20">
+				<TextBlock.Style>
+					<Style TargetType="TextBlock">
+						<Setter Property="Foreground" Value="Gray"/>
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding Path=PageAttributes.PageIncrementable}" Value="True">
+								<Setter Property="Foreground" Value="Yellow"/>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</TextBlock.Style>
+			</TextBlock>
+		</Button>
+
+		<Button
+			Name="HomeButton"
+			Style="{StaticResource GenericButton}"
+			Grid.Row="3" 
 			Grid.ColumnSpan="3"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Background="Transparent"
-			BorderThickness="0"
 			Command="{Binding HomeButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
 			<Button.Content>
@@ -94,125 +116,158 @@
 				</TextBlock>
 			</Button.Content>
 		</Button>
+		<!-- End Static Buttons -->
 
-
-		<!-- Dynamic Buttons -->
-
-		<Button
+		<!-- Content 1: Apps Display -->
+		<ContentControl 
+			x:Name="AppPageDisplay" 
 			Grid.Row="1" 
-			Grid.Column="0"
-			Uid="1"
-			Style="{StaticResource AppButton}"
-			Visibility="{Binding Path=ApplicationAttributes[0].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
-			<Button.Content>
-				<Image 
-					Source="../Images/1.jpg">
-				</Image>
-			</Button.Content>
-		</Button>
+			Grid.ColumnSpan="3"
+			Visibility="{Binding PageAttributes.DisplayAppList, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}" >
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
 
-		<Button
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+
+				<!-- Dynamic Buttons -->
+				<Button
+					Grid.Row="0" 
+					Grid.Column="0"
+					Uid="1"
+					Style="{StaticResource AppButton}"
+					Visibility="{Binding Path=ApplicationAttributes[0].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
+					<Button.Content>
+						<Image 
+							Source="../Images/1.jpg">
+						</Image>
+					</Button.Content>
+				</Button>
+
+				<Button
+					Grid.Row="0" 
+					Grid.Column="1"
+					Uid="2"
+					Style="{StaticResource AppButton}"
+					Visibility="{Binding Path=ApplicationAttributes[1].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
+					<Button.Content>
+						<Image
+						Source="../Images/2.jpg">
+						</Image>
+					</Button.Content>
+				</Button>
+
+				<Button
+					Grid.Row="0" 
+					Grid.Column="2"
+					Uid="3"
+					Style="{StaticResource AppButton}"
+					Visibility="{Binding Path=ApplicationAttributes[2].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
+					<Button.Content>
+						<Image
+						Source="../Images/3.jpg">
+						</Image>
+					</Button.Content>
+				</Button>
+
+				<Button
+					Grid.Row="1" 
+					Grid.Column="0"
+					Uid="4"
+					Style="{StaticResource AppButton}"
+					Visibility="{Binding Path=ApplicationAttributes[3].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
+					<Button.Content>
+						<Image 
+							Source="../Images/4.jpg">
+						</Image>
+					</Button.Content>
+				</Button>
+
+				<Button
+					Grid.Row="1" 
+					Grid.Column="1"
+					Uid="5"
+					Style="{StaticResource AppButton}"
+					Visibility="{Binding Path=ApplicationAttributes[4].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
+					<Button.Content>
+						<Image
+						Source="../Images/5.jpg">
+						</Image>
+					</Button.Content>
+				</Button>
+
+				<Button
+					Grid.Row="1" 
+					Grid.Column="2"
+					Uid="6"
+					Style="{StaticResource AppButton}"
+					Visibility="{Binding Path=ApplicationAttributes[5].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
+					<Button.Content>
+						<Image
+						Source="../Images/6.jpg">
+						</Image>
+					</Button.Content>
+				</Button>
+
+				<Button
+					Grid.Row="2" 
+					Grid.Column="0"
+					Uid="7"
+					Style="{StaticResource AppButton}"
+					Visibility="{Binding Path=ApplicationAttributes[6].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
+					<Button.Content>
+						<Image 
+							Source="../Images/7.jpg">
+						</Image>
+					</Button.Content>
+				</Button>
+
+				<Button
+					Grid.Row="2" 
+					Grid.Column="1"
+					Uid="8"
+					Style="{StaticResource AppButton}"
+					Visibility="{Binding Path=ApplicationAttributes[7].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
+					<Button.Content>
+						<Image
+						Source="../Images/8.jpg">
+						</Image>
+					</Button.Content>
+				</Button>
+
+				<Button
+					Grid.Row="2" 
+					Grid.Column="2"
+					Uid="9"
+					Style="{StaticResource AppButton}"
+					Visibility="{Binding Path=ApplicationAttributes[8].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
+					<Button.Content>
+						<Image
+						Source="../Images/9.jpg">
+						</Image>
+					</Button.Content>
+				</Button>
+			</Grid>
+		</ContentControl>
+		<!-- End Content 1: Apps Display -->
+		
+		<!-- Content 2: Execute App -->
+		<ContentControl 
+			x:Name="AppExecute" 
 			Grid.Row="1" 
-			Grid.Column="1"
-			Uid="2"
-			Style="{StaticResource AppButton}"
-			Visibility="{Binding Path=ApplicationAttributes[1].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
-			<Button.Content>
-				<Image
-				Source="../Images/2.jpg">
-				</Image>
-			</Button.Content>
-		</Button>
-
-		<Button
-			Grid.Row="1" 
-			Grid.Column="2"
-			Uid="3"
-			Style="{StaticResource AppButton}"
-			Visibility="{Binding Path=ApplicationAttributes[2].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
-			<Button.Content>
-				<Image
-				Source="../Images/3.jpg">
-				</Image>
-			</Button.Content>
-		</Button>
-
-		<Button
-			Grid.Row="2" 
-			Grid.Column="0"
-			Uid="4"
-			Style="{StaticResource AppButton}"
-			Visibility="{Binding Path=ApplicationAttributes[3].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
-			<Button.Content>
-				<Image 
-					Source="../Images/4.jpg">
-				</Image>
-			</Button.Content>
-		</Button>
-
-		<Button
-			Grid.Row="2" 
-			Grid.Column="1"
-			Uid="5"
-			Style="{StaticResource AppButton}"
-			Visibility="{Binding Path=ApplicationAttributes[4].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
-			<Button.Content>
-				<Image
-				Source="../Images/5.jpg">
-				</Image>
-			</Button.Content>
-		</Button>
-
-		<Button
-			Grid.Row="2" 
-			Grid.Column="2"
-			Uid="6"
-			Style="{StaticResource AppButton}"
-			Visibility="{Binding Path=ApplicationAttributes[5].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
-			<Button.Content>
-				<Image
-				Source="../Images/6.jpg">
-				</Image>
-			</Button.Content>
-		</Button>
-
-		<Button
-			Grid.Row="3" 
-			Grid.Column="0"
-			Uid="7"
-			Style="{StaticResource AppButton}"
-			Visibility="{Binding Path=ApplicationAttributes[6].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
-			<Button.Content>
-				<Image 
-					Source="../Images/7.jpg">
-				</Image>
-			</Button.Content>
-		</Button>
-
-		<Button
-			Grid.Row="3" 
-			Grid.Column="1"
-			Uid="8"
-			Style="{StaticResource AppButton}"
-			Visibility="{Binding Path=ApplicationAttributes[7].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
-			<Button.Content>
-				<Image
-				Source="../Images/8.jpg">
-				</Image>
-			</Button.Content>
-		</Button>
-
-		<Button
-			Grid.Row="3" 
-			Grid.Column="2"
-			Uid="9"
-			Style="{StaticResource AppButton}"
-			Visibility="{Binding Path=ApplicationAttributes[8].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}">
-			<Button.Content>
-				<Image
-				Source="../Images/9.jpg">
-				</Image>
-			</Button.Content>
-		</Button>
+			Grid.ColumnSpan="3"
+			Visibility="{Binding PageAttributes.DisplayAppExecution, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}" >
+			<WebBrowser cmn:WebBrowserHelper.Url="{Binding Path=PageAttributes.Url}">
+			</WebBrowser>
+		</ContentControl>
+		
+		<!-- End Content 2: Execute App -->
 	</Grid>
 </Window>
