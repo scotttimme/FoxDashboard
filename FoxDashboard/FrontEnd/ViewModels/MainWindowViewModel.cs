@@ -35,6 +35,7 @@ namespace TabletMock.FrontEnd.ViewModels
 
         private ICommand _appButtonCommand;
         public ICommand AppButtonCommand { get => _appButtonCommand; set => _appButtonCommand = value; }
+        
         private ICommand _homeButtonCommand;
         public ICommand HomeButtonCommand { get => _homeButtonCommand; set => _homeButtonCommand = value; }
 
@@ -142,7 +143,7 @@ namespace TabletMock.FrontEnd.ViewModels
                 string myButtonUid = myButton.Uid.ToString();
                 appIndex = (int)EnumUtility.GetEnumValueFromDescription<ApplicationIndices>(myButtonUid);
 
-                MessageBox.Show("Visibility: " + ApplicationAttributes[appIndex].AppVisibility.ToString());
+                MessageBox.Show("Botton: " + myButtonUid + " Visibility: " + ApplicationAttributes[appIndex].AppVisibility.ToString());
             }
             else
             {
