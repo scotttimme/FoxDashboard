@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TabletMock.FrontEnd.ViewModels
+namespace FoxDashboard.FrontEnd.ViewModels
 {
     public abstract class ViewModel : INotifyPropertyChanged
     {

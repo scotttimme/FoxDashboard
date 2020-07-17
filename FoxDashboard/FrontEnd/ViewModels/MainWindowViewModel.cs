@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoxDashboard.FrontEnd.Common;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -9,29 +10,28 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using TabletMock.FrontEnd.Common;
-using TabletMock.FrontEnd.Models;
+using FoxDashboard.FrontEnd.Common;
+using FoxDashboard.FrontEnd.Models;
 
-namespace TabletMock.FrontEnd.ViewModels
+namespace FoxDashboard.FrontEnd.ViewModels
 {
 
     public class MainWindowViewModel : ViewModel
     {
         #region data
         const int _appsPerPage = (int)ApplicationIndices.MaxApplications;
+        private DataStore _dataStore = new DataStore();
         private int _pageCount;
         private int _pageNumber;
-
-        private DataStore _dataStore = new DataStore();
+        
         public ObservableCollection<AppAttributes> ApplicationAttributes { get; } = new ObservableCollection<AppAttributes>();
-
         public PageAttributes PageAttributes { get; } = new PageAttributes();
-        //public ObservableCollection<PageAttributes> PageAttributes { get; } = new ObservableCollection<PageAttributes>();
 
         private ICommand _appButtonCommand;
         public ICommand AppButtonCommand { get => _appButtonCommand; set => _appButtonCommand = value; }
@@ -39,8 +39,11 @@ namespace TabletMock.FrontEnd.ViewModels
         private ICommand _homeButtonCommand;
         public ICommand HomeButtonCommand { get => _homeButtonCommand; set => _homeButtonCommand = value; }
 
-        public ObservableCollection<AppAttributes> TestAppListAttributes { get; } = new ObservableCollection<AppAttributes>();
-        public AppAttributes TestAppAttributes { get; } = new AppAttributes();
+        private ICommand _pageDecCommand;
+        public ICommand PageDecCommand { get => _pageDecCommand; set => _pageDecCommand = value; }
+
+        private ICommand _pageIncCommand;
+        public ICommand PageIncCommand { get => _pageIncCommand; set => _pageIncCommand = value; }
         #endregion 
 
         #region constructor
@@ -49,7 +52,6 @@ namespace TabletMock.FrontEnd.ViewModels
             _pageNumber = 1;
 
             ApplicationAttributes.CollectionChanged += MyCollectionChanged;
-            //PageAttributes += Page_PropertyChanged;
 
             CountApps();
             _pageCount = DeterminePageCount();
@@ -57,6 +59,8 @@ namespace TabletMock.FrontEnd.ViewModels
 
             AppButtonCommand = new RelayCommand(new Action<object>(ProcessApp));
             HomeButtonCommand = new RelayCommand(new Action<object>(HomeButton_Click));
+            PageDecCommand = new RelayCommand(new Action<object>(DecPageButton_Click));
+            PageIncCommand = new RelayCommand(new Action<object>(IncPageButton_Click));
         }
         #endregion 
 
@@ -66,12 +70,13 @@ namespace TabletMock.FrontEnd.ViewModels
             _dataStore.AppCount = 0;
             string myDirectory = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
             _dataStore.AppPath = myDirectory+"\\..\\Apps";
-            _dataStore.AppCount =  Directory.GetDirectories(_dataStore.AppPath).Length;
+
+            _dataStore.AppList = new DirectoryInfo(_dataStore.AppPath).GetDirectories().Select(x => x.Name).ToList();
+            _dataStore.AppCount = _dataStore.AppList.Count;
         }
 
         private int DeterminePageCount()
         {
-            //This is done awfully to show C#'s built in libraries. Casting and convertring example
             int pageCount = (int)(Math.Ceiling(Convert.ToDouble(_dataStore.AppCount) / Convert.ToDouble(_appsPerPage)));
 
             return pageCount;
@@ -79,10 +84,8 @@ namespace TabletMock.FrontEnd.ViewModels
 
         private void UpdatePageButtons()
         {
-            PageAttributes.PageDecVisibility = (_pageNumber > 0) ? Visibility.Visible : Visibility.Hidden;
-            PageAttributes.PageIncVisibiltiy = (_pageNumber < _pageCount) ? Visibility.Visible : Visibility.Hidden;
-
-           // Page_PropertyChanged();
+            PageAttributes.PageDecrementable = (_pageNumber > 1) ? true : false;
+            PageAttributes.PageIncrementable = (_pageNumber < _pageCount) ? true : false;
         }
 
         private void UpdateAppList()
@@ -94,7 +97,6 @@ namespace TabletMock.FrontEnd.ViewModels
 
             for (int i = 0; (i < _appsPerPage) && !endOfApps; i++)
             {
-                // I wanted to show here the ability to convert simple with C#
                 appNumber = pageOffset + i + 1;
                 imageNumberPath = appNumber.ToString();
 
@@ -112,6 +114,12 @@ namespace TabletMock.FrontEnd.ViewModels
                 }
             }
         }
+
+        private void ToggleView()
+        {
+            PageAttributes.DisplayAppList = !PageAttributes.DisplayAppList;
+            PageAttributes.DisplayAppExecution = !PageAttributes.DisplayAppExecution;
+        }
         #endregion
 
 
@@ -127,23 +135,43 @@ namespace TabletMock.FrontEnd.ViewModels
         public void HomeButton_Click(object obj)
 
         {
-            //UpdatePageDisplay();
-            //toggle app 1 for testing
-            bool temp = (ApplicationAttributes[0].AppVisibility == true) ? false : true;
-            ApplicationAttributes[0].AppVisibility = temp;
+            if (PageAttributes.DisplayAppExecution)
+            {
+                ToggleView();
+                PageAttributes.PageTitle = Constants.DEFAULTTITLE;
+            }
+        }
+
+        public void DecPageButton_Click(object obj)
+        {
+            if (_pageNumber > 1)
+            {
+                _pageNumber--;
+                UpdatePageDisplay();
+            }
+        }
+
+        public void IncPageButton_Click(object obj)
+        {
+            if (_pageNumber < _pageCount)
+            {
+                _pageNumber++;
+                UpdatePageDisplay();
+            }
         }
 
         public void ProcessApp(object obj)
         {
-            int appIndex;
-
             if (obj.GetType() != null)
             {
+                int pageOffset = (_pageNumber - 1) * _appsPerPage;
                 Button myButton = obj as Button;
                 string myButtonUid = myButton.Uid.ToString();
-                appIndex = (int)EnumUtility.GetEnumValueFromDescription<ApplicationIndices>(myButtonUid);
-
-                MessageBox.Show("Botton: " + myButtonUid + " Visibility: " + ApplicationAttributes[appIndex].AppVisibility.ToString());
+                int appIndex = (int)EnumUtility.GetEnumValueFromDescription<ApplicationIndices>(myButtonUid) + pageOffset;
+                
+                PageAttributes.Url = _dataStore.AppPath+"\\"+ _dataStore.AppList[appIndex].ToString()+ "\\index.html";
+                PageAttributes.PageTitle = _dataStore.AppList[appIndex].ToString(); 
+                ToggleView();
             }
             else
             {
@@ -175,14 +203,6 @@ namespace TabletMock.FrontEnd.ViewModels
                 NotifyPropertyChanged("ApplicationAttributes");
             }
         }
-
-/*        private void Page_PropertyChanged(object sendder, PropertyChangedEventArgs e)
-        {
-            if(e.PropertyName == "fds")
-            {
-                NotifyPropertyChanged("PageAttributes");
-            }
-        }*/
         #endregion 
     }
 }

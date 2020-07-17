@@ -14,10 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TabletMock.FrontEnd.Models;
-using TabletMock.FrontEnd.ViewModels;
+using FoxDashboard.FrontEnd.Models;
+using FoxDashboard.FrontEnd.ViewModels;
 
-namespace TabletMock.FrontEnd.Views
+namespace FoxDashboard.FrontEnd.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

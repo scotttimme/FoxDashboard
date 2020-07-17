@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace TabletMock.FrontEnd.Models
+namespace FoxDashboard.FrontEnd.Models
 {
     public class AppAttributes : INotifyPropertyChanged
     {
@@ -25,7 +25,6 @@ namespace TabletMock.FrontEnd.Models
                     _appVisibility = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppVisibility)));
                 }
-                
             }
         }
         
