@@ -10,34 +10,34 @@ namespace TabletMock.FrontEnd.Models
 {
     public class PageAttributes : INotifyPropertyChanged
     {
-        private Visibility _pageDecVisibility = Visibility.Hidden;
-        private Visibility _pageIncVisibiltiy = Visibility.Hidden;
+        private bool _pageDecrementable = false;
+        private bool _pageIncrementable = false;
         
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Visibility PageDecVisibility 
+        public bool PageDecrementable 
         { 
-            get => _pageDecVisibility; 
+            get => _pageDecrementable; 
             set
             {
-                if (PageDecVisibility != value)
+                if (PageDecrementable != value)
                 {
-                    _pageDecVisibility = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PageDecVisibility)));
+                    _pageDecrementable = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PageDecrementable)));
                 }
 
             }
         }
        
-        public Visibility PageIncVisibiltiy 
+        public bool PageIncrementable 
         { 
-            get => _pageIncVisibiltiy; 
+            get => _pageIncrementable; 
             set
             {
-                if (PageIncVisibiltiy != value)
+                if (PageIncrementable != value)
                 {
-                    _pageIncVisibiltiy = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PageIncVisibiltiy)));
+                    _pageIncrementable = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PageIncrementable)));
                 }
 
             }

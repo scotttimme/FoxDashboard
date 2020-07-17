@@ -29,9 +29,7 @@ namespace TabletMock.FrontEnd.ViewModels
 
         private DataStore _dataStore = new DataStore();
         public ObservableCollection<AppAttributes> ApplicationAttributes { get; } = new ObservableCollection<AppAttributes>();
-
         public PageAttributes PageAttributes { get; } = new PageAttributes();
-        //public ObservableCollection<PageAttributes> PageAttributes { get; } = new ObservableCollection<PageAttributes>();
 
         private ICommand _appButtonCommand;
         public ICommand AppButtonCommand { get => _appButtonCommand; set => _appButtonCommand = value; }
@@ -39,8 +37,12 @@ namespace TabletMock.FrontEnd.ViewModels
         private ICommand _homeButtonCommand;
         public ICommand HomeButtonCommand { get => _homeButtonCommand; set => _homeButtonCommand = value; }
 
-        public ObservableCollection<AppAttributes> TestAppListAttributes { get; } = new ObservableCollection<AppAttributes>();
-        public AppAttributes TestAppAttributes { get; } = new AppAttributes();
+        private ICommand _pageDecCommand;
+        public ICommand PageDecCommand { get => _pageDecCommand; set => _pageDecCommand = value; }
+
+        private ICommand _pageIncCommand;
+        public ICommand PageIncCommand { get => _pageIncCommand; set => _pageIncCommand = value; }
+
         #endregion 
 
         #region constructor
@@ -49,7 +51,6 @@ namespace TabletMock.FrontEnd.ViewModels
             _pageNumber = 1;
 
             ApplicationAttributes.CollectionChanged += MyCollectionChanged;
-            //PageAttributes += Page_PropertyChanged;
 
             CountApps();
             _pageCount = DeterminePageCount();
@@ -57,6 +58,8 @@ namespace TabletMock.FrontEnd.ViewModels
 
             AppButtonCommand = new RelayCommand(new Action<object>(ProcessApp));
             HomeButtonCommand = new RelayCommand(new Action<object>(HomeButton_Click));
+            PageDecCommand = new RelayCommand(new Action<object>(DecPageButton_Click));
+            PageIncCommand = new RelayCommand(new Action<object>(IncPageButton_Click));
         }
         #endregion 
 
@@ -79,10 +82,8 @@ namespace TabletMock.FrontEnd.ViewModels
 
         private void UpdatePageButtons()
         {
-            PageAttributes.PageDecVisibility = (_pageNumber > 0) ? Visibility.Visible : Visibility.Hidden;
-            PageAttributes.PageIncVisibiltiy = (_pageNumber < _pageCount) ? Visibility.Visible : Visibility.Hidden;
-
-           // Page_PropertyChanged();
+            PageAttributes.PageDecrementable = (_pageNumber > 1) ? true : false;
+            PageAttributes.PageIncrementable = (_pageNumber < _pageCount) ? true : false;
         }
 
         private void UpdateAppList()
@@ -133,6 +134,24 @@ namespace TabletMock.FrontEnd.ViewModels
             ApplicationAttributes[0].AppVisibility = temp;
         }
 
+        public void DecPageButton_Click(object obj)
+        {
+            if (_pageNumber > 0)
+            {
+                _pageNumber--;
+                UpdatePageDisplay();
+            }
+        }
+
+        public void IncPageButton_Click(object obj)
+        {
+            if (_pageNumber < _pageCount)
+            {
+                _pageNumber++;
+                UpdatePageDisplay();
+            }
+        }
+
         public void ProcessApp(object obj)
         {
             int appIndex;
@@ -175,14 +194,6 @@ namespace TabletMock.FrontEnd.ViewModels
                 NotifyPropertyChanged("ApplicationAttributes");
             }
         }
-
-/*        private void Page_PropertyChanged(object sendder, PropertyChangedEventArgs e)
-        {
-            if(e.PropertyName == "fds")
-            {
-                NotifyPropertyChanged("PageAttributes");
-            }
-        }*/
         #endregion 
     }
 }

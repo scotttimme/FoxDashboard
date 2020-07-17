@@ -22,7 +22,7 @@
 	<Window.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="..\Styles\AppButtonStyle.xaml"/>
+				<ResourceDictionary Source="..\Styles\ButtonStyle.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<conv:BooleanToVisibilityConverter x:Key="BoolConverter" />
 		</ResourceDictionary>
@@ -47,6 +47,7 @@
 		<!-- Static Buttons -->
 
 		<TextBlock
+			Name="DashboardTitle"
 			Grid.Row="0" 
 			Grid.ColumnSpan="3"
 			Text="Welcome! Select an App."
@@ -56,33 +57,57 @@
 			Foreground="Yellow">
 		</TextBlock>
 
-		<TextBlock
+		<Button
+			Name="PageDec"
+			Style="{StaticResource GenericButton}"
 			Grid.Row="4" 
 			Grid.Column="0"
-			Text="&lt;&lt;"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			FontSize="20"
-			Foreground="Gray">
-		</TextBlock>
-
-		<TextBlock
-			Grid.Row="4" 
-			Grid.Column="2"
-			Text="&gt;&gt;"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			FontSize="20"
-			Foreground="Gray">
-		</TextBlock>
+			Command="{Binding PageDecCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<TextBlock
+				Text="&lt;&lt;"
+				FontSize="20">
+				<TextBlock.Style>
+					<Style TargetType="TextBlock">
+						<Setter Property="Foreground" Value="Gray"/>
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding Path=PageAttributes.PageDecrementable}" Value="True">
+								<Setter Property="Foreground" Value="Yellow"/>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</TextBlock.Style>
+			</TextBlock>
+		</Button>
 
 		<Button
+			Name="PageInc"
+			Style="{StaticResource GenericButton}"
+			Grid.Row="4" 
+			Grid.Column="2"
+			Command="{Binding PageIncCommand}"
+			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+			<TextBlock
+				Text="&gt;&gt;"
+				FontSize="20">
+				<TextBlock.Style>
+					<Style TargetType="TextBlock">
+						<Setter Property="Foreground" Value="Gray"/>
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding Path=PageAttributes.PageIncrementable}" Value="True">
+								<Setter Property="Foreground" Value="Yellow"/>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</TextBlock.Style>
+			</TextBlock>
+		</Button>
+
+		<Button
+			Name="HomeButton"
+			Style="{StaticResource GenericButton}"
 			Grid.Row="5" 
 			Grid.ColumnSpan="3"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Background="Transparent"
-			BorderThickness="0"
 			Command="{Binding HomeButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
 			<Button.Content>
