@@ -101,7 +101,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Apps\" />
     <Folder Include="FrontEnd\Styles\" />
   </ItemGroup>
   <ItemGroup>

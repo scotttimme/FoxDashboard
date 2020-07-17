@@ -100,14 +100,14 @@ namespace TabletMock.FrontEnd.ViewModels
                 if (appNumber <= _dataStore.AppCount)
                 {
                     ApplicationAttributes.Add(new AppAttributes());
-                    ApplicationAttributes[i].AppVisibility = Visibility.Visible;
+                    ApplicationAttributes[i].AppVisibility = true;
                     ApplicationAttributes[i].AppIconPath = _dataStore.AppPath + "\\Images\\" + imageNumberPath + ".jpg";
 
                 }
                 else
                 {
                     ApplicationAttributes.Add(new AppAttributes());
-                    ApplicationAttributes[i].AppVisibility = Visibility.Hidden;
+                    ApplicationAttributes[i].AppVisibility = false;
                 }
             }
         }
@@ -128,7 +128,7 @@ namespace TabletMock.FrontEnd.ViewModels
         {
             //UpdatePageDisplay();
             //toggle app 1 for testing
-            Visibility temp = (ApplicationAttributes[0].AppVisibility == Visibility.Visible) ? Visibility.Hidden : Visibility.Visible;
+            bool temp = (ApplicationAttributes[0].AppVisibility == true) ? false : true;
             ApplicationAttributes[0].AppVisibility = temp;
         }
 

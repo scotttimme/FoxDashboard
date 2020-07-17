@@ -12,10 +12,10 @@ namespace TabletMock.FrontEnd.Models
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private Visibility _appVisibility = Visibility.Hidden;
+        private bool _appVisibility = false;
         private String _appIconPath = string.Empty;
 
-        public Visibility AppVisibility 
+        public bool AppVisibility 
         { 
             get => _appVisibility;
             set

@@ -101,7 +101,7 @@
 			VerticalAlignment="Center"
 			Background="Transparent"
 			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[0].AppVisibility}"
+			Visibility="{Binding Path=ApplicationAttributes[0].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
 			Command="{Binding AppButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
 			<Button.Content>
@@ -119,7 +119,7 @@
 			VerticalAlignment="Center"
 			Background="Transparent"
 			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[1].AppVisibility}"
+			Visibility="{Binding Path=ApplicationAttributes[1].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
 			Command="{Binding AppButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
 			<Button.Content>
@@ -137,7 +137,7 @@
 			VerticalAlignment="Center"
 			Background="Transparent"
 			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[2].AppVisibility, UpdateSourceTrigger=PropertyChanged}"
+			Visibility="{Binding Path=ApplicationAttributes[2].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
 			Command="{Binding AppButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
 			<Button.Content>
@@ -155,7 +155,7 @@
 			VerticalAlignment="Center"
 			Background="Transparent"
 			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[3].AppVisibility}"
+			Visibility="{Binding Path=ApplicationAttributes[3].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
 			Command="{Binding AppButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
 			<Button.Content>
@@ -173,7 +173,7 @@
 			VerticalAlignment="Center"
 			Background="Transparent"
 			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[4].AppVisibility}"
+			Visibility="{Binding Path=ApplicationAttributes[4].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
 			Command="{Binding AppButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
 			<Button.Content>
@@ -191,7 +191,7 @@
 			VerticalAlignment="Center"
 			Background="Transparent"
 			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[5].AppVisibility, UpdateSourceTrigger=PropertyChanged}"
+			Visibility="{Binding Path=ApplicationAttributes[5].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
 			Command="{Binding AppButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
 			<Button.Content>
@@ -209,7 +209,7 @@
 			VerticalAlignment="Center"
 			Background="Transparent"
 			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[6].AppVisibility}"
+			Visibility="{Binding Path=ApplicationAttributes[6].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
 			Command="{Binding AppButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
 			<Button.Content>
@@ -227,7 +227,7 @@
 			VerticalAlignment="Center"
 			Background="Transparent"
 			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[7].AppVisibility}"
+			Visibility="{Binding Path=ApplicationAttributes[7].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
 			Command="{Binding AppButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
 			<Button.Content>
@@ -245,7 +245,7 @@
 			VerticalAlignment="Center"
 			Background="Transparent"
 			BorderThickness="0"
-			Visibility="{Binding Path=ApplicationAttributes[8].AppVisibility, UpdateSourceTrigger=PropertyChanged}"
+			Visibility="{Binding Path=ApplicationAttributes[8].AppVisibility, Converter={StaticResource BoolConverter}, FallbackValue=Hidden}"
 			Command="{Binding AppButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
 			<Button.Content>
