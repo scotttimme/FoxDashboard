@@ -26,8 +26,6 @@ namespace FoxDashboard.FrontEnd.Views
     {
         public MainWindow()
         {
-           // DataContext = new MainWindowViewModel();
-           // InitializeComponent();
         }
     }
 
