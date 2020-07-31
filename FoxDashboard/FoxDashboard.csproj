@@ -67,6 +67,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FrontEnd\Common\AppListType.cs" />
     <Compile Include="FrontEnd\Common\EnumBindingSourceExtension.cs" />
     <Compile Include="FrontEnd\Common\Enums.cs" />
     <Compile Include="FrontEnd\Common\RelayCommand.cs" />

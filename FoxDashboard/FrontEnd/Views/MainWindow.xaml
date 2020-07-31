@@ -31,9 +31,8 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height ="2*"/>
-			<RowDefinition Height ="6*"/>
+			<RowDefinition Height ="8*"/>
 			<RowDefinition Height ="2*"/>
-			<RowDefinition Height ="1*"/>
 		</Grid.RowDefinitions>
 
 		<Grid.ColumnDefinitions>
@@ -103,7 +102,7 @@
 		<Button
 			Name="HomeButton"
 			Style="{StaticResource GenericButton}"
-			Grid.Row="3" 
+			Grid.Row="2" 
 			Grid.ColumnSpan="3"
 			Command="{Binding HomeButtonCommand}"
 			CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
@@ -111,8 +110,17 @@
 				<TextBlock
 					Text="HOME"
 					FontSize="12"
-					Foreground="Yellow"
 					TextDecorations="underline">
+					<TextBlock.Style>
+						<Style TargetType="TextBlock">
+							<Setter Property="Foreground" Value="Yellow"/>
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding PageAttributes.DisplayAppList}" Value="true">
+									<Setter Property="Foreground" Value="Gray"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
 				</TextBlock>
 			</Button.Content>
 		</Button>

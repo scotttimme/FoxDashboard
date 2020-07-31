@@ -54,6 +54,7 @@ namespace FoxDashboard.FrontEnd.ViewModels
             ApplicationAttributes.CollectionChanged += MyCollectionChanged;
 
             CountApps();
+
             _pageCount = DeterminePageCount();
             UpdatePageDisplay();
 
@@ -67,12 +68,34 @@ namespace FoxDashboard.FrontEnd.ViewModels
         #region private Methods
         private void CountApps()
         {
+            string appName = String.Empty;
+            string executableName = String.Empty;          
             _dataStore.AppCount = 0;
+
             string myDirectory = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
             _dataStore.AppPath = myDirectory+"\\..\\Apps";
+            DirectoryInfo d = new DirectoryInfo(_dataStore.AppPath);
 
-            _dataStore.AppList = new DirectoryInfo(_dataStore.AppPath).GetDirectories().Select(x => x.Name).ToList();
-            _dataStore.AppCount = _dataStore.AppList.Count;
+            foreach (DirectoryInfo dir in d.GetDirectories())
+            {
+                appName = dir.Name;
+                foreach (FileInfo file in dir.GetFiles())
+                {
+                    if ( (file.Extension.Equals(".html")) || (file.Extension.Equals(".exe")) )
+                    {
+                        executableName = file.Name;
+                    }
+                }
+
+                _dataStore.Apps.Add(new Common.App() { AppName = appName, ExecutableName = executableName });
+            }
+
+            _dataStore.AppCount = _dataStore.Apps.Count;
+        }
+
+        private void GetAppExecutables()
+        {
+
         }
 
         private int DeterminePageCount()
@@ -168,9 +191,16 @@ namespace FoxDashboard.FrontEnd.ViewModels
                 Button myButton = obj as Button;
                 string myButtonUid = myButton.Uid.ToString();
                 int appIndex = (int)EnumUtility.GetEnumValueFromDescription<ApplicationIndices>(myButtonUid) + pageOffset;
+/*
+                try
+                {
+                    foreach (string file in )
+                }*/
+
+
                 
-                PageAttributes.Url = _dataStore.AppPath+"\\"+ _dataStore.AppList[appIndex].ToString()+ "\\index.html";
-                PageAttributes.PageTitle = _dataStore.AppList[appIndex].ToString(); 
+                PageAttributes.Url = _dataStore.AppPath + "\\" + _dataStore.Apps[appIndex].AppName.ToString() + "\\" + _dataStore.Apps[appIndex].ExecutableName.ToString();
+                PageAttributes.PageTitle = _dataStore.Apps[appIndex].AppName.ToString(); 
                 ToggleView();
             }
             else

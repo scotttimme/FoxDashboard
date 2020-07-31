@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoxDashboard.FrontEnd.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace FoxDashboard.FrontEnd.Models
 
         public string AppPath { get; set; }
 
-        public List<string> AppList { get; set; }
+        public List<Common.App> Apps = new List<Common.App>();
     }
 }
